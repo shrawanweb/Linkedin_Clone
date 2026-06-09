@@ -1,0 +1,20 @@
+import { configureStore } from "@reduxjs/toolkit";
+import authReducer from "./reducer/authReducer";
+import postReducer from "./reducer/postReducer";
+
+/**
+ * 
+ * STEP for state Management
+ * Submit action
+ * Handle action in it's reducer
+ * Register Here -> Reducer
+ *  
+ * */ 
+
+
+export const store = configureStore({
+    reducer: {
+        auth: authReducer,
+        posts: postReducer
+    }
+})
