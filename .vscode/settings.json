@@ -1,0 +1,6 @@
+{
+    "postman.settings.dotenv-detection-notification-visibility": false,
+    "js/ts.suggest.autoImports": true,
+    "js/ts.preferences.preferTypeOnlyAutoImports": true,
+    "files.autoSave": "onFocusChange"
+}
