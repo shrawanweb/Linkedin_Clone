@@ -5,6 +5,7 @@ import crypto from "crypto";
 import bcrypt from "bcrypt";
 import PDFDocument from "pdfkit";
 import fs from "fs";
+import { log } from "console";
 
 
 const convertUserDataTOPDF = async(userData) => {
@@ -142,23 +143,39 @@ export const updateUserProfile = async (req, res) => {
 
 export const getUserAndProfile = async (req, res) => {
     try {
-        const {token} = req.body;
 
-        const user = await User.findOne({token : token});
+        console.log("BODY:", req.body);
+
+        const { token } = req.body;
+
+        console.log("TOKEN RECEIVED:", token);
+
+        const user = await User.findOne({ token });
+
+        console.log("USER FOUND:", user);
 
         if (!user) {
-            return res.status(404).json({message: "User not found"});
+            return res.status(404).json({
+                message: "User not found"
+            });
         }
 
-        console.log(user)
+        const userProfile = await Profile.findOne({
+            userId: user._id
+        }).populate(
+            "userId",
+            "name email username profilePicture"
+        );
 
-        const userProfile = await Profile.findOne({userId: user._id})
-        .populate("userId", "name email username profilePicture");
+        console.log("PROFILE:", userProfile);
 
-        return res.json({userProfile});
+        return res.json({ userProfile });
 
     } catch (error) {
-        return res.status(500).json({message: error.message});
+        console.log(error);
+        return res.status(500).json({
+            message: error.message
+        });
     }
 }
 
