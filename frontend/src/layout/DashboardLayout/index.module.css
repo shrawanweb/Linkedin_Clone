@@ -15,6 +15,7 @@
     flex-direction: column;
     gap: 1.2rem;
     align-items: start;
+    border-right: 1px solid silver;
 }
 
 .sideBarOption {
@@ -23,6 +24,7 @@
     font-size: 1.3rem;
     gap: 1.3rem;
     width: 80%;
+    min-width: 100px;
     max-width: 80%;
     margin: 0 auto;
     cursor: pointer;
@@ -35,4 +37,14 @@
 
 .sideBarOption > svg {
     height: 1.35em;
+    min-width: fit-content;
+}
+
+.homeContainer__extraContainer {
+    border-left: 1px solid silver;
+    padding-left: 1.2rem;
+}
+
+.homeContainer__feedContainer {
+    padding-inline: 1.8rem;
 }
