@@ -1,21 +1,46 @@
-POST http://localhost:9090/register HTTP/1.1
-content-Type: application/json
+POST http://localhost:9090/register
+Content-Type: application/json
 
 {
-    "username": "testuser",
-    "email": "testuser@example.com",
-    "password": "testpassword",
-    "name": "Test User"
+    "username":"testuser",
+    "email":"testuser@example.com",
+    "password":"testpassword",
+    "name":"Test User"
 }
 
 ###
 
-POST http://localhost:9090/login HTTP/1.1
-content-Type: application/json
+POST http://localhost:9090/login
+Content-Type: application/json
 
 {
-    "email": "testuser@example.com",
-    "password": "testpassword"
+    "email":"testuser@example.com",
+    "password":"testpassword"
+}
+
+###
+
+POST http://localhost:9090/update_profile_data
+Content-Type: application/json
+
+{
+    "token":"765c99d1969beede3c07883ae240f8b6c8bdaf94c8587cc7a302a59ae99f3b0e",
+    "bio":"I am Neha",
+    "currentPost":"Software Engineer",
+    "pastWork":[
+        {
+            "company":"Google",
+            "position":"Software Engineer",
+            "years":"2023-Present"
+        }
+    ],
+    "education":[
+        {
+            "school":"ABC University",
+            "degree":"B.Tech",
+            "fieldOfStudy":"Computer Science"
+        }
+    ]
 }
 
 ###
@@ -24,39 +49,7 @@ POST http://localhost:9090/get_user_and_profile HTTP/1.1
 content-Type: application/json
 
 {
-    "token": "f06bab32fcf2fcef46665adeea1fb8338e3b3c2a0b5ead32399b12806bd05253"
-}
-
-###
-
-POST http://localhost:9090/update_profile_data HTTP/1.1
-content-Type: application/json
-
-{
-    "token": "f06bab32fcf2fcef46665adeea1fb8338e3b3c2a0b5ead32399b12806bd05253",
-    "profileData": {
-        "headline": "Software Engineer at Test Company",
-        "location": "Test City, Test Country",
-        "about": "I am a test user.",
-        "experience": [
-            {
-                "title": "Software Engineer",
-                "company": "Test Company",
-                "startDate": "2020-01-01",
-                "endDate": "Present",
-                "description": "Working on various projects."
-            }
-        ],
-        "education": [
-            {
-                "school": "Test University",
-                "degree": "Bachelor's Degree in Computer Science",
-                "startDate": "2016-01-01",
-                "endDate": "2020-01-01"
-            }
-        ],
-        "skills": ["JavaScript", "Node.js", "React"]
-    }
+    "token": "765c99d1969beede3c07883ae240f8b6c8bdaf94c8587cc7a302a59ae99f3b0e"
 }
 
 ###

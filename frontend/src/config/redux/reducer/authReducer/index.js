@@ -1,106 +1,118 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAboutUser, getAllUsers, loginUser, registerUser } from "../../action/authAction";
-
+import {
+  getAboutUser,
+  getAllUsers,
+  loginUser,
+  registerUser,
+  getConnectionsRequest,
+  sendConnectionRequest,
+} from "../../action/authAction";
 
 const initialState = {
-    user: null,
-    isError: false,
-    isSuccess: false,
-    isLoading: false,
-    loggedIn: false,
-    message: "",
-    isTokenThere: false,
-    profileFetched: false,
-    connections: [],
-    connectionRequests: [],
-    all_users: [],
-    all_profiles_fetched: false
-}
+  user: null,
+  isError: false,
+  isSuccess: false,
+  isLoading: false,
+  loggedIn: false,
+  message: "",
+  isTokenThere: false,
+  profileFetched: false,
+  connections: [],
+  connectionRequests: [],
+  all_users: [],
+  all_profiles_fetched: false,
+};
 
 const authSlice = createSlice({
-    name: "auth",
-    initialState,
-    reducers: {
-        reset: () => initialState,
+  name: "auth",
+  initialState,
+  reducers: {
+    reset: () => initialState,
 
-        handleLoginUser: (state) => {
-            state.message = "hello";
-        },
-
-        emptyMessage: (state) => {
-            state.message = "";
-        },
-        setTokenIsThere: (state) => {
-            state.isTokenThere = true
-        },
-        setTokenIsNotThere: (state) => {
-            state.isTokenThere = false
-            
-        }
+    handleLoginUser: (state) => {
+      state.message = "hello";
     },
 
-    extraReducers: (builder) => {
+    emptyMessage: (state) => {
+      state.message = "";
+    },
+    setTokenIsThere: (state) => {
+      state.isTokenThere = true;
+    },
+    setTokenIsNotThere: (state) => {
+      state.isTokenThere = false;
+    },
+  },
 
-        builder
-        .addCase(loginUser.pending, (state) => {
-            state.isLoading = true;
-            state.message = "Knocking the door...";
-        })
+  extraReducers: (builder) => {
+    builder
+      .addCase(loginUser.pending, (state) => {
+        state.isLoading = true;
+        state.message = "Knocking the door...";
+      })
 
-        .addCase(loginUser.fulfilled, (state, action) => {
-            state.isLoading = false;
-            state.isError = false;
-            state.isSuccess = true;
-            state.loggedIn = true;
-            state.message = "Login is Successful";
-        })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.loggedIn = true;
+        state.message = "Login is Successful";
+      })
 
-        .addCase(loginUser.rejected, (state, action) => {
-            state.isLoading = false;
-            state.isError = true;
-            state.message = action.payload;
-        })
+      .addCase(loginUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
 
-        .addCase(registerUser.pending, (state) => {
-            state.isLoading = true;
-            state.message = "Registering you...";
-        })
+      .addCase(registerUser.pending, (state) => {
+        state.isLoading = true;
+        state.message = "Registering you...";
+      })
 
-        .addCase(registerUser.fulfilled, (state, action) => {
-            state.isLoading = false;
-            state.isError = false;
-            state.isSuccess = true;
+      .addCase(registerUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
 
-            state.message = {
-                message: "Registration is Successful, Please login in"
-            };
-        })
+        state.message = {
+          message: "Registration is Successful, Please login in",
+        };
+      })
 
-        .addCase(registerUser.rejected, (state, action) => {
-            state.isLoading = false;
-            state.isError = true;
-            state.message = action.payload;
-        })
-        .addCase(getAboutUser.fulfilled, (state, action) => {
-            state.isLoading = false;
-            state.isError = false;
-            state.profileFetched = true;
+      .addCase(registerUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(getAboutUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.profileFetched = true;
 
-            console.log("PROFILE RESPONSE:", action.payload);
+        console.log("PROFILE RESPONSE:", action.payload);
 
-            state.user = action.payload.userProfile;
-        })
-        .addCase(getAllUsers.fulfilled, (state, action) => {
-            state.isLoading = false;
-            state.isError = false;
-            state.all_users = action.payload.profiles;
-            state.all_profiles_fetched = true;
+        state.user = action.payload.userProfile;
+      })
+      .addCase(getAllUsers.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.all_users = action.payload.profiles;
+        state.all_profiles_fetched = true;
 
-            console.log("ALL USERS:", action.payload.profiles);
-        })
-    }
-})
+        console.log("ALL USERS:", action.payload.profiles);
+      })
+      .addCase(getConnectionsRequest.fulfilled, (state, action) => {
+        state.connections = action.payload.connections;
+      })
 
-export const { reset, emptyMessage, setTokenIsThere, setTokenIsNotThere } = authSlice.actions;
+      .addCase(sendConnectionRequest.fulfilled, (state) => {
+        console.log("Connection Request Sent");
+      });
+  },
+});
+
+export const { reset, emptyMessage, setTokenIsThere, setTokenIsNotThere } =
+  authSlice.actions;
 
 export default authSlice.reducer;

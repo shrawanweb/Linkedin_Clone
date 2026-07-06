@@ -85,3 +85,40 @@ export const getAllUsers = createAsyncThunk(
         }
     }
 )
+
+export const getConnectionsRequest = createAsyncThunk(
+  "user/getConnectionsRequest",
+  async (data, thunkAPI) => {
+    try {
+      const response = await clientServer.post(
+        "/user/getConnectionRequests",
+        {
+          token: data.token,
+        }
+      );
+
+      return thunkAPI.fulfillWithValue(response.data);
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const sendConnectionRequest = createAsyncThunk(
+  "user/sendConnectionRequest",
+  async (data, thunkAPI) => {
+    try {
+      const response = await clientServer.post(
+        "/user/send_connection_request",
+        {
+          token: data.token,
+          connectionId: data.connectionId,
+        }
+      );
+
+      return thunkAPI.fulfillWithValue(response.data);
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response.data);
+    }
+  }
+);
