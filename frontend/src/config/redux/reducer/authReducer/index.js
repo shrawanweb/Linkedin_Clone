@@ -6,13 +6,14 @@ import {
   registerUser,
   getConnectionsRequest,
   sendConnectionRequest,
+  getMyConnectionRequests,
 } from "../../action/authAction";
 
 const initialState = {
   user: null,
   isError: false,
   isSuccess: false,
-  isLoading: false,
+  isLoading: false, 
   loggedIn: false,
   message: "",
   isTokenThere: false,
@@ -103,12 +104,17 @@ const authSlice = createSlice({
         console.log("ALL USERS:", action.payload.profiles);
       })
       .addCase(getConnectionsRequest.fulfilled, (state, action) => {
-        state.connections = action.payload.connections;
+        state.connections = action.payload;
       })
-
-      .addCase(sendConnectionRequest.fulfilled, (state) => {
-        console.log("Connection Request Sent");
-      });
+      .addCase(getConnectionsRequest.rejected, (state, action) => {
+        state.message = action.payload;
+      })
+      .addCase(getMyConnectionRequests.fulfilled, (state, action) => {
+        state.connectionRequests = action.payload;
+      })
+      .addCase(getMyConnectionRequests.rejected, (state, action) => {
+        state.message = action.payload;
+      })
   },
 });
 

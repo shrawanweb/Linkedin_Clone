@@ -172,7 +172,6 @@ export const getUserAndProfile = async (req, res) => {
 
 export const updateProfileData = async (req, res) => {
   try {
-
     console.log("BODY:", req.body);
 
     const { token, ...newProfileData } = req.body;
@@ -183,12 +182,12 @@ export const updateProfileData = async (req, res) => {
 
     if (!user) {
       return res.status(404).json({
-        message: "User not found"
+        message: "User not found",
       });
     }
 
     const profile = await Profile.findOne({
-      userId: user._id
+      userId: user._id,
     });
 
     console.log("PROFILE BEFORE:", profile);
@@ -202,13 +201,12 @@ export const updateProfileData = async (req, res) => {
     console.log("PROFILE SAVED");
 
     return res.json({
-      message: "Profile updated"
+      message: "Profile updated",
     });
-
   } catch (err) {
     console.log(err);
     return res.status(500).json({
-      message: err.message
+      message: err.message,
     });
   }
 };
@@ -298,7 +296,7 @@ export const getMyConnectionsRequests = async (req, res) => {
 };
 
 export const whatAreMyConnections = async (req, res) => {
-  const { token } = req.body;
+  const { token } = req.query;
 
   try {
     const user = await User.findOne({ token });
@@ -311,7 +309,9 @@ export const whatAreMyConnections = async (req, res) => {
       connectionId: user._id,
     }).populate("userId", "name username email profilePicture");
 
-    return res.json(connections);
+    return res.json({
+      connections
+    });
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }
