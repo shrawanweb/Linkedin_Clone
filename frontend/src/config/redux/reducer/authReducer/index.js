@@ -1,19 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
-  getAboutUser,
-  getAllUsers,
   loginUser,
   registerUser,
+  getAboutUser,
+  getAllUsers,
   getConnectionsRequest,
-  sendConnectionRequest,
   getMyConnectionRequests,
+  sendConnectionRequest,
+  AcceptConnection,
 } from "../../action/authAction";
 
 const initialState = {
   user: null,
   isError: false,
   isSuccess: false,
-  isLoading: false, 
+  isLoading: false,
   loggedIn: false,
   message: "",
   isTokenThere: false,
@@ -115,6 +116,17 @@ const authSlice = createSlice({
       .addCase(getMyConnectionRequests.rejected, (state, action) => {
         state.message = action.payload;
       })
+      .addCase(AcceptConnection.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(AcceptConnection.fulfilled, (state) => {
+        state.isLoading = false;
+        state.message = "Connection Accepted";
+      })
+      .addCase(AcceptConnection.rejected, (state, action) => {
+        state.isLoading = false;
+        state.message = action.payload;
+      });
   },
 });
 

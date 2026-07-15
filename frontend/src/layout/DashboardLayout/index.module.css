@@ -48,3 +48,44 @@
 .homeContainer__feedContainer {
     padding-inline: 0.8rem;
 }
+
+.mobileNavbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 6vh;
+    ;
+    display: none;
+    justify-content: space-around;
+    background: white;
+    align-items: center;
+}
+
+.mobileNavbar svg {
+    height: 1.5rem;
+    width: 1.5ffrem;
+}
+
+@media only screen and (max-width: 600px) {
+
+    .homeContainer__extraContainer {
+        display: none;
+    }
+    
+    .homeContainer {
+        display: block;
+    }
+
+    .homeContainer__leftBar {
+        display: none;
+    }
+
+    .mobileNavbar {
+        display: flex;
+    }
+
+    .homeContainer__feedContainer {
+        padding-bottom: 8vh;
+    }
+}
